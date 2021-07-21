@@ -1,4 +1,5 @@
 # Vue.js 학습 노트 애플리케이션
+> 21.07~ 부터 인프런 Vue.js 끝장내기 강좌를 통해 공부하는 중(프론트단)
 
 인프런 [Vue.js Endgame 강의](https://www.inflearn.com/course/vue-js-%EB%81%9D%EB%82%B4%EA%B8%B0-%EC%BA%A1%ED%8B%B4%ED%8C%90%EA%B5%90)에서 다루는 애플리케이션 소스 코드입니다.
 
