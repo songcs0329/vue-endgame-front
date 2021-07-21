@@ -8,19 +8,13 @@
       <label for="password">pw: </label>
       <input id="password" type="text" v-model="password" />
     </div>
-    <div>
-      <label for="nickname">nickname: </label>
-      <input id="nickname" type="text" v-model="nickname" />
-    </div>
-    <button :disabled="!isFormValid || !password || !nickname" type="submit">
-      회원가입
-    </button>
+    <button :disabled="!isFormValid || !password" type="submit">로그인</button>
     <p>{{ logMessage }}</p>
   </form>
 </template>
 
 <script>
-import { registerUser } from '@/apis';
+import { loginUser } from '@/apis';
 import { validateEmail } from '@/utils/validation';
 
 export default {
@@ -28,7 +22,6 @@ export default {
     return {
       username: '',
       password: '',
-      nickname: '',
       logMessage: '',
     };
   },
@@ -40,17 +33,14 @@ export default {
   methods: {
     async submitForm() {
       try {
-        const userData = {
+        const loginData = {
           username: this.username,
           password: this.password,
-          nickname: this.nickname,
         };
-        const { data } = await registerUser(userData);
-        this.logMessage = `${data.username}이 가입되었습니다.`;
+        const { data } = await loginUser(loginData);
+        this.logMessage = `${data.user.username} 님 환영합니다.`;
       } catch (error) {
-        if (error.response.status === 409) {
-          this.logMessage = `사용자 아이디가 이미 존재하여 회원 가입이 실패하였습니다.`;
-        }
+        this.logMessage = error.response.data;
       } finally {
         this.initForm();
       }
@@ -58,7 +48,6 @@ export default {
     initForm() {
       this.username = '';
       this.password = '';
-      this.nickname = '';
     },
   },
 };

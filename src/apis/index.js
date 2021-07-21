@@ -5,3 +5,5 @@ const instance = axios.create({
 });
 
 export const registerUser = userData => instance.post(`/signup`, userData);
+
+export const loginUser = userData => instance.post(`/login`, userData);
