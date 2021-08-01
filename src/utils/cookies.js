@@ -6,28 +6,22 @@ function saveUserToCookie(value) {
   document.cookie = `til_user=${value}`;
 }
 
-function getAuthFromCookie() {
-  return document.cookie.replace(
-    /(?:(?:^|.*;\s*)til_auth\s*=\s*([^;]*).*$)|^.*$/,
-    '$1',
+function getCookieMatchName(name) {
+  let matches = document.cookie.match(
+    new RegExp(
+      '(?:^|; )' +
+        name.replace(
+          /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+          '\\$1',
+        ) +
+        '=([^;]*)',
+    ),
   );
-}
-
-function getUserFromCookie() {
-  return document.cookie.replace(
-    /(?:(?:^|.*;\s*)til_user\s*=\s*([^;]*).*$)|^.*$/,
-    '$1',
-  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
 function deleteCookie(value) {
   document.cookie = `${value}=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 }
 
-export {
-  saveAuthToCookie,
-  saveUserToCookie,
-  getAuthFromCookie,
-  getUserFromCookie,
-  deleteCookie,
-};
+export { saveAuthToCookie, saveUserToCookie, getCookieMatchName, deleteCookie };
